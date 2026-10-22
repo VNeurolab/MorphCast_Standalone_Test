@@ -1,6 +1,116 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MorphCast Test Lab</title><link rel="stylesheet" href="style.css"></head><body>
-<header><a class="brand" href="index.html">VN <span>EXPERIMENTAL TOOLS</span></a><a href="guide.html">Setup & usage guide ↗</a></header>
-<main><div class="eyebrow">MORPHCAST / INTEGRATION SANDBOX</div><h1>See the signal.<br><span>Test the connection.</span></h1><p class="intro">A standalone workspace for checking facial-expression outputs, inspecting SDK events, and exporting a test session.</p>
-<div class="layout"><section class="panel controls"><h2>01 / Configure</h2><label for="mode">Run mode</label><select id="mode"><option value="demo">Demo — simulated data</option value="live">Live — MorphCast SDK</option></select><p class="hint">Demo works without a license or camera. It does not test MorphCast connectivity.</p><label for="key">MorphCast SDK license key</label><input id="key" type="password" autocomplete="off" placeholder="Paste your license key here later"><p class="hint">Used only for this page session. Never included in exports.</p><label class="check"><input id="extra" type="checkbox"> Include attention + arousal / valence</label><p class="hint">Optional modules require access on your license.</p><label class="check"><input id="consent" type="checkbox"> I agree to use my camera for this live test.</label><button id="start" class="primary">Start demo</button><button id="stop" disabled>Stop session</button><div id="status" role="status" aria-live="polite">Ready. No session running.</div><p class="hint">Starting a new session clears the previous results. Export them first.</p></section>
-<section class="panel"><div class="sectionhead"><h2>02 / Observe</h2><span id="badge" class="badge">DEMO / SIMULATED</span></div><div class="camera"><canvas id="camera" hidden></canvas><div id="placeholder"><div class="orb">◎</div><strong id="cameraLabel">No camera required</strong><p id="cameraHint">Start a demo to explore the dashboard.</p></div></div><div class="stats"><div><small>Face count*</small><strong id="faces">—</strong></div><div><small>Top expression</small><strong id="dominant">—</strong></div><div><small>Captured events</small><strong id="count">0</strong></div></div><p class="hint">*SDK-smoothed count. Outputs describe model estimates, not verified feelings, ability, or performance.</p><div id="bars"></div><div class="stats secondary"><div><small>Attention</small><strong id="attention">—</strong></div><div><small>Arousal</small><strong id="arousal">—</strong></div><div><small>Valence</small><strong id="valence">—</strong></div></div></section></div>
-<section class="panel export"><div class="sectionhead"><div><h2>03 / Inspect & export</h2><p class="hint">Latest captured event • full payloads in JSON • flattened metrics in CSV</p></div><div><button id="csv" disabled>Download CSV</button> <button id="json" disabled>Download JSON</button></div></div><pre id="raw">No events yet.</pre><p class="hint">This app keeps up to 20,000 events in memory and automatically stops at that limit or after 10 minutes. Closing this page discards results. No video is recorded.</p></section><footer>Independent integration test · Not an official MorphCast product · <a href="guide.html">Read the guide</a></footer></main><script src="config.js"></script><script src="app.js"></script></body></html>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>MorphCast Test Lab</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <a class="brand" href="index.html">VN <span>EXPERIMENTAL TOOLS</span></a
+      ><a href="guide.html">Setup & usage guide ↗</a>
+    </header>
+    <main>
+      <div class="eyebrow">MORPHCAST / INTEGRATION SANDBOX</div>
+      <h1>See the signal.<br /><span>Test the connection.</span></h1>
+      <p class="intro">
+        A standalone workspace for checking facial-expression outputs, inspecting SDK
+        events, and exporting a test session.
+      </p>
+      <div class="layout">
+        <section class="panel controls">
+          <h2>01 / Configure</h2>
+          <label for="mode">Run mode</label
+          ><select id="mode">
+            <option value="demo">Demo — simulated data</option>
+            <option value="live">Live — MorphCast SDK</option>
+          </select>
+          <p class="hint">
+            Demo works without a license or camera. It does not test MorphCast
+            connectivity.
+          </p>
+          <label for="key">MorphCast SDK license key</label
+          ><input
+            id="key"
+            type="password"
+            autocomplete="off"
+            placeholder="Paste your license key here later"
+          />
+          <p class="hint">Used only for this page session. Never included in exports.</p>
+          <label class="check"
+            ><input id="extra" type="checkbox" /> Include attention + arousal /
+            valence</label
+          >
+          <p class="hint">Optional modules require access on your license.</p>
+          <label class="check"
+            ><input id="consent" type="checkbox" /> I agree to use my camera for this live
+            test.</label
+          ><button id="start" class="primary">Start demo</button
+          ><button id="stop" disabled>Stop session</button>
+          <div id="status" role="status" aria-live="polite">
+            Ready. No session running.
+          </div>
+          <p class="hint">
+            Starting a new session clears the previous results. Export them first.
+          </p>
+        </section>
+        <section class="panel">
+          <div class="sectionhead">
+            <h2>02 / Observe</h2>
+            <span id="badge" class="badge">DEMO / SIMULATED</span>
+          </div>
+          <div class="camera">
+            <canvas id="camera" hidden></canvas>
+            <div id="placeholder">
+              <div class="orb">◎</div>
+              <strong id="cameraLabel">No camera required</strong>
+              <p id="cameraHint">Start a demo to explore the dashboard.</p>
+            </div>
+          </div>
+          <div class="stats">
+            <div><small>Face count*</small><strong id="faces">—</strong></div>
+            <div><small>Top expression</small><strong id="dominant">—</strong></div>
+            <div><small>Captured events</small><strong id="count">0</strong></div>
+          </div>
+          <p class="hint">
+            *SDK-smoothed count. Outputs describe model estimates, not verified feelings,
+            ability, or performance.
+          </p>
+          <div id="bars"></div>
+          <div class="stats secondary">
+            <div><small>Attention</small><strong id="attention">—</strong></div>
+            <div><small>Arousal</small><strong id="arousal">—</strong></div>
+            <div><small>Valence</small><strong id="valence">—</strong></div>
+          </div>
+        </section>
+      </div>
+      <section class="panel export">
+        <div class="sectionhead">
+          <div>
+            <h2>03 / Inspect & export</h2>
+            <p class="hint">
+              Latest captured event • full payloads in JSON • flattened metrics in CSV
+            </p>
+          </div>
+          <div>
+            <button id="csv" disabled>Download CSV</button>
+            <button id="json" disabled>Download JSON</button>
+          </div>
+        </div>
+        <pre id="raw">No events yet.</pre>
+        <p class="hint">
+          This app keeps up to 20,000 events in memory and automatically stops at that
+          limit or after 10 minutes. Closing this page discards results. No video is
+          recorded.
+        </p>
+      </section>
+      <footer>
+        Independent integration test · Not an official MorphCast product ·
+        <a href="guide.html">Read the guide</a>
+      </footer>
+    </main>
+    <script src="config.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

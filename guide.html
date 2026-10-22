@@ -1,13 +1,286 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MorphCast Test Lab — Guide</title><link rel="stylesheet" href="style.css"></head><body><header><a class="brand" href="index.html">VN <span>EXPERIMENTAL TOOLS</span></a><a href="index.html">← Open test lab</a></header><main class="guide"><div class="eyebrow">SETUP / TEST / EXPORT</div><h1>Your first MorphCast test</h1><p>This standalone app targets the <strong>MorphCast Emotion AI HTML5 SDK v1.17</strong>. It is separate from Talent BRAIN, Pavlovia and your participant spreadsheets. There is no backend, installation step or build command.</p>
-<h2>1 / Deploy to GitHub Pages</h2><ol><li>Extract the ZIP. Create a new GitHub repository, for example <code>morphcast-test</code>. A public repository is the simplest option for free Pages hosting. Do not upload participant files or exports.</li><li>Choose <strong>Add file → Upload files</strong>. Upload the contents of the extracted folder, including <code>index.html</code>, <code>style.css</code>, <code>config.js</code>, <code>app.js</code> and <code>guide.html</code>. Place index.html directly in the repository root, not inside another folder. Commit the files to <code>main</code>.</li><li>Open <strong>Settings → Pages</strong>. Select <strong>Deploy from a branch</strong>, then <strong>main</strong> and <strong>/(root)</strong>. Save.</li><li>Wait for deployment to finish. Open the URL shown in Pages, normally <code>https://YOUR-USERNAME.github.io/morphcast-test/</code>. Use HTTPS.</li><li>For later edits, replace the changed files in the repository and commit. Pages republishes them. Hard-refresh your browser if the old version remains.</li></ol>
-<h2>2 / Test now without a key</h2><ol><li>Open the page and leave <strong>Demo — simulated data</strong> selected.</li><li>Click <strong>Start demo</strong>. The face count becomes 1 and expression bars change. No camera prompt should appear. All generated values are artificial.</li><li>Click <strong>Stop session</strong>, then download CSV and JSON. The stopped dashboard clears current metrics; the captured events remain exportable.</li><li>To simulate the additional outputs, enable the optional-module checkbox before starting a new session. Export first: starting again clears the previous capture.</li></ol><p>You can also double-click index.html for an offline demo. For live testing, use GitHub Pages or a local server such as <code>python -m http.server 8000</code>, opened at <code>http://localhost:8000</code>.</p>
-<h2>3 / Where to put the API key</h2><p><strong>Recommended:</strong> obtain an Emotion AI HTML5 SDK license from MorphCast, select Live mode and paste it into the field named <strong>MorphCast SDK license key</strong>. The page keeps it for the current session only; it is not stored by the app in localStorage or exported.</p><p><strong>Optional code setup:</strong> in <code>config.js</code>, replace the empty string after <code>licenseKey:</code>:</p><pre>window.MORPHCAST_CONFIG = {
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>MorphCast Test Lab — Guide</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <a class="brand" href="index.html">VN <span>EXPERIMENTAL TOOLS</span></a
+      ><a href="index.html">← Open test lab</a>
+    </header>
+    <main class="guide">
+      <div class="eyebrow">SETUP / TEST / EXPORT</div>
+      <h1>Your first MorphCast test</h1>
+      <p>
+        This standalone app targets the
+        <strong>MorphCast Emotion AI HTML5 SDK v1.17</strong>. It is separate from Talent
+        BRAIN, Pavlovia and your participant spreadsheets. There is no backend,
+        installation step or build command.
+      </p>
+      <h2>1 / Deploy to GitHub Pages</h2>
+      <ol>
+        <li>
+          Extract the ZIP. Create a new GitHub repository, for example
+          <code>morphcast-test</code>. A public repository is the simplest option for free
+          Pages hosting. Do not upload participant files or exports.
+        </li>
+        <li>
+          Choose <strong>Add file → Upload files</strong>. Upload the contents of the
+          extracted folder, including <code>index.html</code>, <code>style.css</code>,
+          <code>config.js</code>, <code>app.js</code> and <code>guide.html</code>. Place
+          index.html directly in the repository root, not inside another folder. Commit
+          the files to <code>main</code>.
+        </li>
+        <li>
+          Open <strong>Settings → Pages</strong>. Select
+          <strong>Deploy from a branch</strong>, then <strong>main</strong> and
+          <strong>/(root)</strong>. Save.
+        </li>
+        <li>
+          Wait for deployment to finish. Open the URL shown in Pages, normally
+          <code>https://YOUR-USERNAME.github.io/morphcast-test/</code>. Use HTTPS.
+        </li>
+        <li>
+          For later edits, replace the changed files in the repository and commit. Pages
+          republishes them. Hard-refresh your browser if the old version remains.
+        </li>
+      </ol>
+      <h2>2 / Test now without a key</h2>
+      <ol>
+        <li>Open the page and leave <strong>Demo — simulated data</strong> selected.</li>
+        <li>
+          Click <strong>Start demo</strong>. The face count becomes 1 and expression bars
+          change. No camera prompt should appear. All generated values are artificial.
+        </li>
+        <li>
+          Click <strong>Stop session</strong>, then download CSV and JSON. The stopped
+          dashboard clears current metrics; the captured events remain exportable.
+        </li>
+        <li>
+          To simulate the additional outputs, enable the optional-module checkbox before
+          starting a new session. Export first: starting again clears the previous
+          capture.
+        </li>
+      </ol>
+      <p>
+        You can also double-click index.html for an offline demo. For live testing, use
+        GitHub Pages or a local server such as <code>python -m http.server 8000</code>,
+        opened at <code>http://localhost:8000</code>.
+      </p>
+      <h2>3 / Where to put the API key</h2>
+      <p>
+        <strong>Recommended:</strong> obtain an Emotion AI HTML5 SDK license from
+        MorphCast, select Live mode and paste it into the field named
+        <strong>MorphCast SDK license key</strong>. The page keeps it for the current
+        session only; it is not stored by the app in localStorage or exported.
+      </p>
+      <p>
+        <strong>Optional code setup:</strong> in <code>config.js</code>, replace the empty
+        string after <code>licenseKey:</code>:
+      </p>
+      <pre>
+window.MORPHCAST_CONFIG = {
   licenseKey: 'PASTE_YOUR_BROWSER_SDK_LICENSE_HERE',
   sdkUrl: 'https://ai-sdk.morphcast.com/v1.17/ai-sdk.js'
-};</pre><p>A key placed in config.js is public. This SDK uses a client-side license, not a hidden server credential. Check the license's permitted domains and usage settings with MorphCast; use your GitHub Pages hostname where applicable. Do not paste an account password or a private REST API secret. If MorphCast gives you a REST endpoint rather than an HTML5 SDK license, this integration will need an adapter and potentially a backend.</p>
-<h2>4 / Run a live test</h2><ol><li>Select Live, enter the license and check the camera consent box. Keep optional modules off for the first attempt.</li><li>Click <strong>Start live test</strong>. Allow camera access. Internet is needed to load the SDK, models and licensing services.</li><li>Keep one face in the frame with even lighting. Wait for the preview and captured-event count. A started SDK alone is not proof of valid results: check that FACE_EMOTION events actually arrive.</li><li>Try a neutral expression, a smile and a brief look away. Inspect changes without assuming a particular result.</li><li>Stop, export, and check the file's <code>mode</code> is <code>live</code>. Repeat with optional modules if your license includes them. Reload before changing modules or license after a live initialization.</li></ol>
-<h2>5 / Expected output</h2><table><tr><th>Output</th><th>What you will see</th></tr><tr><td>Camera</td><td>Mirrored preview of the SDK's sampled frames; no recording.</td></tr><tr><td>Face count</td><td>Smoothed detector count. Use one person for this test.</td></tr><tr><td>Expressions</td><td>Angry, Disgust, Fear, Happy, Neutral, Sad and Surprise, displayed as percentages. Raw exported scores range from 0 to 1.</td></tr><tr><td>Top expression</td><td>SDK dominant label, or the largest score if the label is absent.</td></tr><tr><td>Optional attention</td><td>Displayed as a percentage; exported on a 0–1 scale.</td></tr><tr><td>Optional arousal / valence</td><td>Signed values from −1 to +1. These are model estimates.</td></tr><tr><td>Unavailable output</td><td>A dash, not a zero. Current metrics clear on stop or stale emotion output.</td></tr></table><p>These outputs are facial-analysis estimates. They do not establish a person's actual internal feelings or Talent BRAIN capacity scores. This tool performs no psychological scoring or participant evaluation.</p>
-<h2>6 / Understanding exports</h2><p><strong>CSV:</strong> one row per captured module event, with UTC timestamp, elapsed milliseconds, mode, module and the relevant metrics. Empty cells mean that metric is absent from that event. Rows from different modules are asynchronous; they are not synchronized trials. Open the CSV in Excel, and filter by module. All raw numerical scales are preserved.</p><p><strong>JSON:</strong> session metadata and captured SDK event payloads, before app-level flattening. SDK outputs can already be smoothed; “raw payload” does not mean unfiltered model predictions. Filenames include demo/live and session time. Keys and camera images are excluded.</p><p>Export after Stop for a complete session end time. Export while running gives a snapshot only. The 20,000-event or 10-minute limit ends capture automatically. There is no automatic cloud backup. Downloads go to your browser's usual download location. Closing or refreshing the tab clears the capture.</p>
-<h2>7 / Troubleshooting</h2><table><tr><th>Symptom</th><th>Action</th></tr><tr><td>404 after deployment</td><td>Confirm index.html is in the publishing root and inspect the repository's Pages deployment status.</td></tr><tr><td>Live cannot start</td><td>Confirm the license is an HTML5 SDK license, active and permitted for this site. Test with optional modules disabled.</td></tr><tr><td>SDK download failure</td><td>Check internet/firewall access to ai-sdk.morphcast.com. After restoring access, reload and retry.</td></tr><tr><td>No camera or permission error</td><td>Allow camera access in browser site settings; close other camera apps and use HTTPS. Reload.</td></tr><tr><td>Waiting indefinitely during loading</td><td>Check for a hidden permission dialog, blocked model downloads or license errors. Close the tab to end a stalled start, then retry. Never assume capture started without events.</td></tr><tr><td>Preview but no emotion data</td><td>Check lighting, face position and licensed modules. Inspect browser developer tools if it continues. Do not interpret missing outputs as zero.</td></tr><tr><td>Camera stays active after Stop</td><td>Close the tab to release it. The app reports stop failures rather than confirming success.</td></tr><tr><td>Optional values stay blank</td><td>Enable the checkbox before loading, verify your license and reload. Inspect JSON to see whether those events arrived.</td></tr></table>
-<h2>8 / Data and test boundaries</h2><p>This app does not upload test events or camera frames to your GitHub repository, Apps Script or Pavlovia. It retains captured outputs in page memory until download or refresh. The live SDK is third-party software and makes its own loading/licensing requests; review MorphCast's terms and privacy information for its behavior. Start with your own camera for this integration test.</p><p>Verified locally: JavaScript syntax, demo generation, export formatting, missing-key validation and mocked SDK lifecycle. Actual license acceptance and real-camera output are not verified without your license.</p>
-<h2>References</h2><ul><li><a href="https://ai-sdk.morphcast.com/v1.17/docs/index.html">MorphCast SDK v1.17 documentation</a></li><li><a href="https://www.morphcast.com/learn/emotion-ai-html5-sdk-faq/">MorphCast licensing FAQ</a></li><li><a href="https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site">GitHub Pages publishing configuration</a></li></ul><p>Integration references checked 22 October 2026.</p></main></body></html>
+};</pre>
+      <p>
+        A key placed in config.js is public. This SDK uses a client-side license, not a
+        hidden server credential. Check the license's permitted domains and usage settings
+        with MorphCast; use your GitHub Pages hostname where applicable. Do not paste an
+        account password or a private REST API secret. If MorphCast gives you a REST
+        endpoint rather than an HTML5 SDK license, this integration will need an adapter
+        and potentially a backend.
+      </p>
+      <h2>4 / Run a live test</h2>
+      <ol>
+        <li>
+          Select Live, enter the license and check the camera consent box. Keep optional
+          modules off for the first attempt.
+        </li>
+        <li>
+          Click <strong>Start live test</strong>. Allow camera access. Internet is needed
+          to load the SDK, models and licensing services.
+        </li>
+        <li>
+          Keep one face in the frame with even lighting. Wait for the preview and
+          captured-event count. A started SDK alone is not proof of valid results: check
+          that FACE_EMOTION events actually arrive.
+        </li>
+        <li>
+          Try a neutral expression, a smile and a brief look away. Inspect changes without
+          assuming a particular result.
+        </li>
+        <li>
+          Stop, export, and check the file's <code>mode</code> is <code>live</code>.
+          Repeat with optional modules if your license includes them. Reload before
+          changing modules or license after a live initialization.
+        </li>
+      </ol>
+      <h2>5 / Expected output</h2>
+      <table>
+        <tr>
+          <th>Output</th>
+          <th>What you will see</th>
+        </tr>
+        <tr>
+          <td>Camera</td>
+          <td>Mirrored preview of the SDK's sampled frames; no recording.</td>
+        </tr>
+        <tr>
+          <td>Face count</td>
+          <td>Smoothed detector count. Use one person for this test.</td>
+        </tr>
+        <tr>
+          <td>Expressions</td>
+          <td>
+            Angry, Disgust, Fear, Happy, Neutral, Sad and Surprise, displayed as
+            percentages. Raw exported scores range from 0 to 1.
+          </td>
+        </tr>
+        <tr>
+          <td>Top expression</td>
+          <td>SDK dominant label, or the largest score if the label is absent.</td>
+        </tr>
+        <tr>
+          <td>Optional attention</td>
+          <td>Displayed as a percentage; exported on a 0–1 scale.</td>
+        </tr>
+        <tr>
+          <td>Optional arousal / valence</td>
+          <td>Signed values from −1 to +1. These are model estimates.</td>
+        </tr>
+        <tr>
+          <td>Unavailable output</td>
+          <td>
+            A dash, not a zero. Current metrics clear on stop or stale emotion output.
+          </td>
+        </tr>
+      </table>
+      <p>
+        These outputs are facial-analysis estimates. They do not establish a person's
+        actual internal feelings or Talent BRAIN capacity scores. This tool performs no
+        psychological scoring or participant evaluation.
+      </p>
+      <h2>6 / Understanding exports</h2>
+      <p>
+        <strong>CSV:</strong> one row per captured module event, with UTC timestamp,
+        elapsed milliseconds, mode, module and the relevant metrics. Empty cells mean that
+        metric is absent from that event. Rows from different modules are asynchronous;
+        they are not synchronized trials. Open the CSV in Excel, and filter by module. All
+        raw numerical scales are preserved.
+      </p>
+      <p>
+        <strong>JSON:</strong> session metadata and captured SDK event payloads, before
+        app-level flattening. SDK outputs can already be smoothed; “raw payload” does not
+        mean unfiltered model predictions. Filenames include demo/live and session time.
+        Keys and camera images are excluded.
+      </p>
+      <p>
+        Export after Stop for a complete session end time. Export while running gives a
+        snapshot only. The 20,000-event or 10-minute limit ends capture automatically.
+        There is no automatic cloud backup. Downloads go to your browser's usual download
+        location. Closing or refreshing the tab clears the capture.
+      </p>
+      <h2>7 / Troubleshooting</h2>
+      <table>
+        <tr>
+          <th>Symptom</th>
+          <th>Action</th>
+        </tr>
+        <tr>
+          <td>404 after deployment</td>
+          <td>
+            Confirm index.html is in the publishing root and inspect the repository's
+            Pages deployment status.
+          </td>
+        </tr>
+        <tr>
+          <td>Live cannot start</td>
+          <td>
+            Confirm the license is an HTML5 SDK license, active and permitted for this
+            site. Test with optional modules disabled.
+          </td>
+        </tr>
+        <tr>
+          <td>SDK download failure</td>
+          <td>
+            Check internet/firewall access to ai-sdk.morphcast.com. After restoring
+            access, reload and retry.
+          </td>
+        </tr>
+        <tr>
+          <td>No camera or permission error</td>
+          <td>
+            Allow camera access in browser site settings; close other camera apps and use
+            HTTPS. Reload.
+          </td>
+        </tr>
+        <tr>
+          <td>Waiting indefinitely during loading</td>
+          <td>
+            Check for a hidden permission dialog, blocked model downloads or license
+            errors. Close the tab to end a stalled start, then retry. Never assume capture
+            started without events.
+          </td>
+        </tr>
+        <tr>
+          <td>Preview but no emotion data</td>
+          <td>
+            Check lighting, face position and licensed modules. Inspect browser developer
+            tools if it continues. Do not interpret missing outputs as zero.
+          </td>
+        </tr>
+        <tr>
+          <td>Camera stays active after Stop</td>
+          <td>
+            Close the tab to release it. The app reports stop failures rather than
+            confirming success.
+          </td>
+        </tr>
+        <tr>
+          <td>Optional values stay blank</td>
+          <td>
+            Enable the checkbox before loading, verify your license and reload. Inspect
+            JSON to see whether those events arrived.
+          </td>
+        </tr>
+      </table>
+      <h2>8 / Data and test boundaries</h2>
+      <p>
+        This app does not upload test events or camera frames to your GitHub repository,
+        Apps Script or Pavlovia. It retains captured outputs in page memory until download
+        or refresh. The live SDK is third-party software and makes its own
+        loading/licensing requests; review MorphCast's terms and privacy information for
+        its behavior. Start with your own camera for this integration test.
+      </p>
+      <p>
+        Verified locally: JavaScript syntax, demo generation, export formatting,
+        missing-key validation and mocked SDK lifecycle. Actual license acceptance and
+        real-camera output are not verified without your license.
+      </p>
+      <h2>References</h2>
+      <ul>
+        <li>
+          <a href="https://ai-sdk.morphcast.com/v1.17/docs/index.html"
+            >MorphCast SDK v1.17 documentation</a
+          >
+        </li>
+        <li>
+          <a href="https://www.morphcast.com/learn/emotion-ai-html5-sdk-faq/"
+            >MorphCast licensing FAQ</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site"
+            >GitHub Pages publishing configuration</a
+          >
+        </li>
+      </ul>
+      <p>Integration references checked 22 October 2026.</p>
+    </main>
+  </body>
+</html>
